@@ -4,10 +4,13 @@ import LoginPage from './LoginPage';
 import MainPage from './MainPage';
 import { UserConsumer, UserProvider } from './UserContext'
 import { EmailProvider } from './EmailContext'
+import { NotificationProvider } from './NotificationContext'
 import './index.css';
+
 
 function Root() {
   return (
+    <NotificationProvider>
     <UserProvider>
       <EmailProvider>
         <UserConsumer>
@@ -16,6 +19,7 @@ function Root() {
         </UserConsumer>
       </EmailProvider>
     </UserProvider>
+  </NotificationProvider>
   )
 }
 
@@ -34,11 +38,13 @@ ReactDOM.render(<Root />, document.querySelector('#root'));
 // }
 //
 // ReactDOM.render(
+// <NotificationProvider>
 // <UserProvider>
 // <EmailProvider>
 // <Root />
 // </EmailProvider>
-// </UserProvider>,
+// </UserProvider>
+// </NotificationProvider>,
 // document.querySelector('#root'));
 
 // this maybe easier for later refactoring

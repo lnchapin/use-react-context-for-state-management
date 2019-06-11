@@ -25,6 +25,20 @@ export const FAKE_EMAILS = [
   }
 ];
 
+const LOTS_OF_EMAILS = Array(1000)
+  .fill(0)
+  .map(_ => {
+    let email =
+      FAKE_EMAILS[
+        Math.floor(Math.random() * FAKE_EMAILS.length)
+      ];
+    return {
+      ...email,
+      id: Math.random(),
+      preview: email.body.substr(0, 46)
+    };
+  });
+
 // Generate a preview
 FAKE_EMAILS.forEach(
   email => (email.preview = email.body.substr(0, 46))
@@ -45,7 +59,25 @@ export function login(username, password) {
 export function fetchEmails() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(FAKE_EMAILS);
+      resolve(LOTS_OF_EMAILS);
+    }, 300);
+  });
+}
+
+export function fetchLatestEmails() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(
+        FAKE_EMAILS.map(e => ({
+          ...e,
+          id: Math.random()
+        })).slice(
+          0,
+          Math.floor(
+            Math.random() * (FAKE_EMAILS.length + 1)
+          )
+        )
+      );
     }, 300);
   });
 }

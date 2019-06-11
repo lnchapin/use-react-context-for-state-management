@@ -7,13 +7,19 @@ import { FAKE_USER } from './api';
 // to centralize our provider. This gives us one class holds all the concerns for users and the root component(index.js) doesn't need to worry about it and it becomes a stateless component
 
 //11.03
-
-const { Provider, Consumer } = React.createContext();
+let UserContext;
+const { Provider, Consumer } = UserContext = React.createContext();
 
 class UserProvider extends Component {
-  state = {
-    currentUser: FAKE_USER
-  };
+  constructor(props){
+    super(props)
+    this.state = {
+      user: FAKE_USER,
+      onLogin: this.handleLogin,
+      onLogout: this.handleLogout
+    };
+  }
+
 
   handleLogin = user => {
     this.setState({ currentUser: user });
@@ -25,11 +31,7 @@ class UserProvider extends Component {
 
   render() {
     return(
-      <Provider value={{
-        user: this.state.currentUser,
-        onLogin: this.handleLogin,
-        onLogout: this.handleLogout
-      }}>{this.props.children}</Provider>
+      <Provider value={this.state}>{this.props.children}</Provider>
     )
   }
 }
@@ -38,4 +40,4 @@ class UserProvider extends Component {
 
 
 
-export {UserProvider, Consumer as UserConsumer};
+export {UserProvider, Consumer as UserConsumer, UserContext };
